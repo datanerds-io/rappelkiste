@@ -1,0 +1,5 @@
+include 'api'
+include 'service'
+include 'specification'
+
+rootProject.name = 'rappelkiste'
