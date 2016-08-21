@@ -11,4 +11,6 @@ dependencies {
     compile 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.22.2'
 
     compile("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.7.2")
+    //compile 'com.google.guava:guava:19.0'
+    compile 'com.squareup:tape:1.2.3'
 }
