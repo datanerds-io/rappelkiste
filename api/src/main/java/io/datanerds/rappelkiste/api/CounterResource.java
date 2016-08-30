@@ -20,7 +20,7 @@ public interface CounterResource {
     @PATCH
     @Path("/counter/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response patchCounter(@PathParam("id") UUID id);
+    Response patchCounter(@PathParam("id") UUID id, PatchOperation operation);
 
     @GET
     @Path("/counters")
