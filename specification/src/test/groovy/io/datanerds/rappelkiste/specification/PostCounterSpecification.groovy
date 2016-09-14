@@ -8,12 +8,13 @@ import org.slf4j.LoggerFactory
 import static io.datanerds.rappelkiste.specification.utils.JsonMatcher.aValidJsonString
 import static io.datanerds.rappelkiste.specification.utils.UuidMatcher.aUUID
 import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
 import static org.awaitility.Awaitility.await
 
-class PostCounterSpec extends BaseSpecification {
+class PostCounterSpecification extends BaseSpecification {
 
-    static final Logger logger = LoggerFactory.getLogger(PostCounterSpec.class);
+    static final Logger logger = LoggerFactory.getLogger(PostCounterSpecification.class);
 
     def "Posting a new Counter to the Service"(String baseUrl) {
 
@@ -35,8 +36,13 @@ class PostCounterSpec extends BaseSpecification {
         URI getUri = new URI(baseUrl + counterPath + "/" + json.asText())
 
         await().ignoreExceptions().until({
-            RestAssured.given().log().all().get(getUri).body.print()
+            RestAssured.given().get(getUri).then().assertThat().statusCode(200)
         })
+
+        and: "The counter has a value of zero"
+        def getResponse = RestAssured.given().get(getUri).body.asString()
+        assertThat(getResponse, is(equalTo("0")))
+
 
         where:
         baseUrl << servers
