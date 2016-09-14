@@ -25,7 +25,7 @@ class BaseSpecification extends SetupSpecification {
         })
 
         where:
-        baseUrl << ["http://localhost:8080", "http://localhost:8081"]
+        baseUrl << ["http://localhost:8080"]
 
     }
 }
