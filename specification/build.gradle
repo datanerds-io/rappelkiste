@@ -5,7 +5,7 @@ description = "Spock Specification for the Rappelkiste"
 
 dependencies {
     testCompile "org.codehaus.groovy:groovy-all:2.4.1"
-    testCompile "com.jayway.awaitility:awaitility:2.4.1"
+    testCompile "org.awaitility:awaitility:2.0.0"
     testCompile "com.jayway.restassured:rest-assured:2.8.0"
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
     testCompile "org.hamcrest:hamcrest-core:1.3"
