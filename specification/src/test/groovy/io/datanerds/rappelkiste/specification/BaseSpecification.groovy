@@ -37,6 +37,4 @@ class BaseSpecification extends Specification {
         })
     }
 
-
-
 }

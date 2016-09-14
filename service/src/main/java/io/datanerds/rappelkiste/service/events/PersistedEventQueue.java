@@ -3,7 +3,7 @@ package io.datanerds.rappelkiste.service.events;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.tape.QueueFile;
-import io.datanerds.rappelkiste.service.RappelkisteException;
+import io.datanerds.rappelkiste.service.exception.RappelkisteException;
 
 import java.io.File;
 import java.io.IOException;

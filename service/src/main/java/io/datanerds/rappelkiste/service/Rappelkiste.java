@@ -26,7 +26,8 @@ public class Rappelkiste extends Server {
 
         ServletHolder servletHolder = handler.addServlet(ServletContainer.class, "/*");
         servletHolder.setInitOrder(0);
-        String classNames = String.format("%s, %s", PingService.class.getCanonicalName(), CounterService.class.getCanonicalName());
+        String classNames = String.format("%s, %s, %s", PingService.class.getCanonicalName(),
+                CounterService.class.getCanonicalName(), CounterNotFoundMapper.class.getCanonicalName());
         servletHolder.setInitParameter("jersey.config.server.provider.classnames", classNames);
         servletHolder.setInitParameter("jersey.config.server.provider.packages", "com.fasterxml.jackson.jaxrs.json");
 
