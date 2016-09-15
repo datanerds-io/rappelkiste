@@ -10,4 +10,14 @@ dependencies {
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
     testCompile "org.hamcrest:hamcrest-core:1.3"
 
+    testCompile( 'com.athaydes:spock-reports:1.2.12' ) {
+        transitive = false // this avoids affecting your version of Groovy/Spock
+    }
+    // if you don't already have slf4j-api and an implementation of it in the classpath, add this!
+    testCompile 'org.slf4j:slf4j-api:1.7.13'
+    testCompile 'org.slf4j:slf4j-simple:1.7.13'
+}
+
+task functionalTest(type: Test) {
+    include '**/*Specification.groovy'
 }

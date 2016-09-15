@@ -3,6 +3,8 @@ package io.datanerds.rappelkiste.specification
 import com.fasterxml.jackson.databind.JsonNode
 import com.jayway.restassured.RestAssured
 import com.jayway.restassured.response.Response
+import spock.lang.Narrative
+import spock.lang.Title
 
 import static io.datanerds.rappelkiste.specification.utils.JsonMatcher.aValidJsonString
 import static org.awaitility.Awaitility.await
@@ -10,6 +12,9 @@ import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
 
+
+@Narrative("Testing the Get part of the Counter Service")
+@Title("Get Counter Testsuite")
 class GetCounterSpecification extends BaseSpecification {
 
     def "Retrieving an existing Counter"(String baseUrl) {
