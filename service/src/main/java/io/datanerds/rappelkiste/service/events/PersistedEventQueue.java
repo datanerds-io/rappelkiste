@@ -3,7 +3,9 @@ package io.datanerds.rappelkiste.service.events;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.tape.QueueFile;
-import io.datanerds.rappelkiste.service.RappelkisteException;
+import io.datanerds.rappelkiste.service.exception.RappelkisteException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PersistedEventQueue implements EventQueue {
 
     private static final int WAIT_ON_EMPTY_LIST_IN_MILLIS = 200;
+    private static final Logger logger = LoggerFactory.getLogger(PersistedEventQueue.class);
 
     private final QueueFile queueFile;
     private final ObjectMapper mapper;
@@ -48,16 +51,19 @@ public class PersistedEventQueue implements EventQueue {
 
     @Override
     public void registerHandler(EventHandler handler) {
+        logger.info("Registering handler of type {}", handler.getClass().getSimpleName());
         handlers.add(handler);
     }
 
     @Override
     public void unregisterHandler(EventHandler handler) {
+        logger.info("Un-registering handler of type {}", handler.getClass().getSimpleName());
         handlers.remove(handler);
     }
 
     @Override
     public void shutdown() {
+        logger.info("Shutting down persisted event queue.");
         consumer.stop();
     }
 

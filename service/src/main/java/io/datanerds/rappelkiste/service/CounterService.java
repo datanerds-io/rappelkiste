@@ -1,7 +1,7 @@
 package io.datanerds.rappelkiste.service;
 
 import io.datanerds.rappelkiste.api.CounterResource;
-import io.datanerds.rappelkiste.api.PatchOperation;
+import io.datanerds.rappelkiste.api.patch.PatchOperation;
 import io.datanerds.rappelkiste.service.counter.CounterModule;
 import io.datanerds.rappelkiste.service.events.AddValueToCounter;
 import io.datanerds.rappelkiste.service.events.CreateCounter;
@@ -9,8 +9,10 @@ import io.datanerds.rappelkiste.service.events.CreateCounter;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-public class CounterService implements CounterResource {
+import static javax.ws.rs.core.Response.Status.CREATED;
+import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
+public class CounterService implements CounterResource {
 
     @Override
     public Response getCounters() {
@@ -21,7 +23,7 @@ public class CounterService implements CounterResource {
     public Response createCounter() {
         UUID id = UUID.randomUUID();
         CounterModule.provideEventQueue().addEvent(new CreateCounter(id));
-        return Response.ok(id).build();
+        return Response.status(CREATED).entity(id).build();
     }
 
     @Override
@@ -32,6 +34,6 @@ public class CounterService implements CounterResource {
     @Override
     public Response patchCounter(UUID id, PatchOperation operation) {
         CounterModule.provideEventQueue().addEvent(new AddValueToCounter(id, operation.value));
-        return Response.ok().build();
+        return Response.status(NO_CONTENT).build();
     }
 }

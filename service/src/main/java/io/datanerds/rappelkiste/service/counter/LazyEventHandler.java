@@ -1,6 +1,6 @@
 package io.datanerds.rappelkiste.service.counter;
 
-import io.datanerds.rappelkiste.service.RappelkisteException;
+import io.datanerds.rappelkiste.service.exception.RappelkisteException;
 import io.datanerds.rappelkiste.service.events.AddValueToCounter;
 import io.datanerds.rappelkiste.service.events.CounterEvent;
 import io.datanerds.rappelkiste.service.events.CreateCounter;

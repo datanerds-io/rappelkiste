@@ -1,5 +1,7 @@
 package io.datanerds.rappelkiste.service.counter;
 
+import io.datanerds.rappelkiste.service.exception.CounterNotFoundException;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -17,6 +19,9 @@ public class InMemoryCounterManager implements CounterManager {
 
     @Override
     public long getCounterValue(UUID id) {
+        if (!counters.containsKey(id)) {
+            throw new CounterNotFoundException(String.format("Counter %s does not exist.", id));
+        }
         return counters.get(id).get();
     }
 
