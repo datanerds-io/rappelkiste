@@ -14,7 +14,6 @@ import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
 public class CounterService implements CounterResource {
 
-
     @Override
     public Response getCounters() {
         return Response.ok(CounterModule.provideCounterAccess().getCounters()).build();
