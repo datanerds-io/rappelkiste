@@ -1,6 +1,5 @@
 package io.datanerds.rappelkiste.specification
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.jayway.restassured.RestAssured
 import com.jayway.restassured.response.Response
 import spock.lang.Narrative

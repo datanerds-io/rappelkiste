@@ -16,7 +16,7 @@ public class JsonProcessingMapper implements ExceptionMapper<JsonProcessingExcep
     public Response toResponse(JsonProcessingException exception) {
         return Response.status(BAD_REQUEST)
                 .type(TEXT_PLAIN)
-                .entity(String.format("Could not process given JSON due to %s", exception.getCause().getMessage()))
+                .entity(String.format("Could not process given JSON due to %s", exception.getMessage()))
                 .build();
     }
 }

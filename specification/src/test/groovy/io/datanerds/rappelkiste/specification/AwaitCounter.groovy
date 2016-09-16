@@ -6,6 +6,8 @@ import static org.awaitility.Awaitility.await
 
 trait AwaitCounter {
 
+    def counterPath = "/v1/counter"
+
     def await = {baseUrl, id ->
         def response
         await().until({

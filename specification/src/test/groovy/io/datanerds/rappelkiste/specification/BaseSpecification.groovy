@@ -1,6 +1,5 @@
 package io.datanerds.rappelkiste.specification
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.restassured.RestAssured
 import org.awaitility.Awaitility
 import org.junit.BeforeClass
