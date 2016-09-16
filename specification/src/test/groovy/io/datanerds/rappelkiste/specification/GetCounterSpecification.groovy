@@ -21,7 +21,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
                     .expect()
                         .statusCode(201)
                     .when()
-                        .post(baseUrl + counterPath)
+                         .post(baseUrl + counterPath)
                     .andReturn()
                         .as(UUID.class)
 

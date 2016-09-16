@@ -16,10 +16,9 @@ class BaseSpecification extends Specification {
 
     def static servers = ["http://localhost:8080"]
     def static logger = LoggerFactory.getLogger(BaseSpecification.class)
+    def static acceptJsonHeader = "application/json-patch+json"
 
     def counterPath = "/v1/counter"
-
-    def ObjectMapper objectMapper = new ObjectMapper()
 
     static {
         Awaitility.setDefaultTimeout(5, TimeUnit.SECONDS)
