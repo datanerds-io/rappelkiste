@@ -1,5 +1,8 @@
 package io.datanerds.rappelkiste.api;
 
+import io.datanerds.rappelkiste.api.patch.PATCH;
+import io.datanerds.rappelkiste.api.patch.PatchOperation;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

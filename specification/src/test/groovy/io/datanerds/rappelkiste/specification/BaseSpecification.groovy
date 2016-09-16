@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.restassured.RestAssured
 import org.awaitility.Awaitility
 import org.junit.BeforeClass
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Specification
 
@@ -16,7 +15,7 @@ import static org.hamcrest.Matchers.containsString
 class BaseSpecification extends Specification {
 
     def static servers = ["http://localhost:8080"]
-    def static Logger logger = LoggerFactory.getLogger(BaseSpecification.class);
+    def static logger = LoggerFactory.getLogger(BaseSpecification.class)
 
     def counterPath = "/v1/counter"
 

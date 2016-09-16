@@ -37,9 +37,8 @@ class PatchCounterSpecification extends BaseSpecification {
                 .body(patchTo)
                 .patch(patchUri)
 
-        //todo @fw should this be 204??
-        then: "The Patch request has status code 200"
-        assertThat(response.statusCode, is(200))
+        then: "The Patch request has status code 204"
+        assertThat(response.statusCode, is(204))
 
         and: "The counter has been updated by one"
         await().ignoreExceptions().until({
@@ -72,9 +71,8 @@ class PatchCounterSpecification extends BaseSpecification {
                 .body(patchTo)
                 .patch(patchUri)
 
-        //todo @fw should this be 204??
-        then: "The Patch request has status code 200"
-        assertThat(response.statusCode, is(200))
+        then: "The Patch request has status code 204"
+        assertThat(response.statusCode, is(204))
 
         and: "The counter has been updated by one"
         await().ignoreExceptions().until({
@@ -118,13 +116,11 @@ class PatchCounterSpecification extends BaseSpecification {
                 .body(patchTo2)
                 .patch(patchUri)
 
-        //todo @fw should this be 204??
-        then: "The first Patch request has status code 200"
-        assertThat(response1.statusCode, is(200))
+        then: "The first Patch request has status code 204"
+        assertThat(response1.statusCode, is(204))
 
-        //todo @fw should this be 204??
-        and: "The second Patch request has status code 200"
-        assertThat(response2.statusCode, is(200))
+        and: "The second Patch request has status code 204"
+        assertThat(response2.statusCode, is(204))
 
         and: "The counter has been updated by one"
         await().ignoreExceptions().until({
@@ -226,8 +222,9 @@ class PatchCounterSpecification extends BaseSpecification {
         when: "A counter is being Patched"
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid.asText())
         def Response response1 = RestAssured
-                .given()
+                .given().log().all()
                 .contentType("application/json-patch+json")
+
                 .body(patchTo1)
                 .patch(patchUri)
 
@@ -246,8 +243,8 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response2.statusCode, is(200))
 
         and: "The counter has been updated by one"
-        await().ignoreExceptions().until({
-            RestAssured.given().get(patchUri).then().assertThat().body(equalTo("42"))
+        await().until({
+            RestAssured.given().get(patchUri).then().assertThat().body(is(equalTo("42")))
         })
 
         where:

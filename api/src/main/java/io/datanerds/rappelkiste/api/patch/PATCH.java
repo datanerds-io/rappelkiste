@@ -1,4 +1,4 @@
-package io.datanerds.rappelkiste.api;
+package io.datanerds.rappelkiste.api.patch;
 
 import javax.ws.rs.HttpMethod;
 import java.lang.annotation.ElementType;
