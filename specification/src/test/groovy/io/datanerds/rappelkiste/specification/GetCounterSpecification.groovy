@@ -35,7 +35,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
             assertThat(response.body.asString(), is(equalTo("0")))
 
         where:
-            baseUrl << servers
+            baseUrl << configuration.servers
 
     }
 
@@ -51,7 +51,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
             assertThat(response.statusCode, is(equalTo(404)))
 
         where:
-            baseUrl << servers
+            baseUrl << configuration.servers
 
     }
 }

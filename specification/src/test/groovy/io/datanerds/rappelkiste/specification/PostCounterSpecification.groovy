@@ -1,6 +1,5 @@
 package io.datanerds.rappelkiste.specification
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.jayway.restassured.RestAssured
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -8,11 +7,7 @@ import spock.lang.Narrative
 import spock.lang.Title
 
 import static org.hamcrest.MatcherAssert.assertThat
-import static org.hamcrest.Matchers.equalTo
-import static org.hamcrest.Matchers.instanceOf
-import static org.hamcrest.Matchers.is
-import static org.hamcrest.Matchers.notNullValue
-
+import static org.hamcrest.Matchers.*
 
 @Narrative("Testing the Post part of the Counter Service")
 @Title("Post Counter Testsuite")
@@ -36,8 +31,6 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
         assertThat(id, is(notNullValue()))
 
         and: "The Counter is available to get"
-        URI getUri = new URI(baseUrl + counterPath + "/" + id)
-
         def response = await(baseUrl, id)
 
         and: "The counter has a value of zero"
@@ -45,7 +38,7 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
         assertThat(counter, is(equalTo(0)))
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
 
     }
 }
