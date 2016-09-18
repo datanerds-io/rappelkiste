@@ -2,6 +2,7 @@ package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
 import com.jayway.restassured.response.Response
+import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
@@ -9,6 +10,7 @@ import static org.awaitility.Awaitility.await
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.counterPath
 
 
 @Narrative("Testing the Patch part of the Counter Service")
@@ -37,7 +39,7 @@ class PatchCounterSpecification extends BaseSpecification {
         when: "A counter is being Patched"
         def response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo)
                 .patch(baseUrl + counterPath + "/" +uuid)
 
@@ -77,7 +79,7 @@ class PatchCounterSpecification extends BaseSpecification {
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -121,13 +123,13 @@ class PatchCounterSpecification extends BaseSpecification {
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
         def Response response1 = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo1)
                 .patch(patchUri)
 
         def Response response2 = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo2)
                 .patch(patchUri)
 
@@ -167,7 +169,7 @@ class PatchCounterSpecification extends BaseSpecification {
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -199,7 +201,7 @@ class PatchCounterSpecification extends BaseSpecification {
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -233,7 +235,7 @@ class PatchCounterSpecification extends BaseSpecification {
         URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
+                    .contentType(Constants.Service.acceptJsonHeader)
                     .body(patchTo)
                 .patch(patchUri)
 

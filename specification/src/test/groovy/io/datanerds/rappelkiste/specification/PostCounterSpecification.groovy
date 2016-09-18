@@ -1,6 +1,7 @@
 package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
+import io.datanerds.rappelkiste.specification.util.Constants
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Narrative
@@ -18,7 +19,7 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
     def "Posting a new Counter to the Service"(String baseUrl) {
 
         given: "The services are running locally"
-        URI postUri = new URI(baseUrl + counterPath)
+        URI postUri = new URI(baseUrl + Constants.Service.counterPath)
         logger.info("Testing url: " + postUri.toString())
 
         when: "A counter is being posted"

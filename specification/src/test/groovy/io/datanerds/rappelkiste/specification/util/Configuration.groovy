@@ -12,7 +12,7 @@ class Configuration {
     }
 
     private static getServersFromProperty() {
-        def baseUrls = System.getProperty(Constants.BASE_URL_PROPERTY, "http://localhost:8080")
+        def baseUrls = System.getProperty(Constants.CommandLine.BASE_URL_PROPERTY, "http://localhost:8080")
         servers = Arrays.asList(baseUrls.split(','))
         logger.debug(String.format("Using the baseUrls: %s", servers))
 

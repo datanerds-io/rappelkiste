@@ -1,6 +1,7 @@
 package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
+import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
@@ -8,6 +9,7 @@ import static java.util.UUID.randomUUID
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.counterPath
 
 
 @Narrative("Testing the Get part of the counter service")

@@ -2,12 +2,11 @@ package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
 import io.datanerds.rappelkiste.specification.util.Configuration
-import io.datanerds.rappelkiste.specification.util.Constants
 import org.awaitility.Awaitility
 import org.junit.BeforeClass
 import org.slf4j.LoggerFactory
-import spock.lang.Specification
 import spock.lang.Shared
+import spock.lang.Specification
 
 import java.util.concurrent.TimeUnit
 
@@ -17,12 +16,9 @@ import static org.hamcrest.Matchers.containsString
 class BaseSpecification extends Specification {
 
     def static logger = LoggerFactory.getLogger(BaseSpecification.class)
-    def static acceptJsonHeader = "application/json-patch+json"
 
     @Shared
     def static configuration = new Configuration()
-
-    def counterPath = "/v1/counter"
 
     static {
         Awaitility.setDefaultTimeout(5, TimeUnit.SECONDS)
