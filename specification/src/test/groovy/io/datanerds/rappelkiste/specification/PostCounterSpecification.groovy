@@ -19,7 +19,7 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
     def "Posting a new Counter to the Service"(String baseUrl) {
 
         given: "The services are running locally"
-        URI postUri = new URI(baseUrl + Constants.Service.counterPath)
+        URI postUri = new URI(baseUrl + Constants.Service.COUNTER_PATH)
         logger.info("Testing url: " + postUri.toString())
 
         when: "A counter is being posted"

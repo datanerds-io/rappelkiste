@@ -7,8 +7,7 @@ interface Constants {
     }
 
     interface Service {
-
-        def static counterPath = "/v1/counter"
-        def static acceptJsonHeader = "application/json-patch+json"
+        def COUNTER_PATH = "/v1/counter"
+        def ACCEPT_JSON_HEADER = "application/json-patch+json"
     }
 }

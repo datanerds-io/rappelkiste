@@ -15,7 +15,7 @@ trait AwaitCounter {
                     .expect()
                     .statusCode(200)
                     .when()
-                    .get(baseUrl + Constants.Service.counterPath + "/" + id)
+                    .get(baseUrl + Constants.Service.COUNTER_PATH + "/" + id)
                     .andReturn()
         })
         response

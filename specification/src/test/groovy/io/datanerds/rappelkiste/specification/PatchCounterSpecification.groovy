@@ -10,7 +10,7 @@ import static org.awaitility.Awaitility.await
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
-import static io.datanerds.rappelkiste.specification.util.Constants.Service.counterPath
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.COUNTER_PATH
 
 
 @Narrative("Testing the Patch part of the Counter Service")
@@ -26,7 +26,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -39,16 +39,16 @@ class PatchCounterSpecification extends BaseSpecification {
         when: "A counter is being Patched"
         def response = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo)
-                .patch(baseUrl + counterPath + "/" +uuid)
+                .patch(baseUrl + COUNTER_PATH + "/" +uuid)
 
         then: "The Patch request has status code 204"
         assertThat(response.statusCode, is(204))
 
         and: "The counter has been updated by one"
         await().ignoreExceptions().until({
-            RestAssured.given().when().get(baseUrl + counterPath + "/" +uuid).then().assertThat().body(equalTo("1"))
+            RestAssured.given().when().get(baseUrl + COUNTER_PATH + "/" +uuid).then().assertThat().body(equalTo("1"))
         })
 
         where:
@@ -65,7 +65,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -76,10 +76,10 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -103,7 +103,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -120,16 +120,16 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response1 = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo1)
                 .patch(patchUri)
 
         def Response response2 = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo2)
                 .patch(patchUri)
 
@@ -157,7 +157,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -166,10 +166,10 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -189,7 +189,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -198,10 +198,10 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo)
                 .patch(patchUri)
 
@@ -221,7 +221,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -232,10 +232,10 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(Constants.Service.acceptJsonHeader)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
                     .body(patchTo)
                 .patch(patchUri)
 

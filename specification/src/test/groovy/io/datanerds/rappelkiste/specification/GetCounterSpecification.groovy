@@ -1,7 +1,6 @@
 package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
-import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
@@ -9,7 +8,7 @@ import static java.util.UUID.randomUUID
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
-import static io.datanerds.rappelkiste.specification.util.Constants.Service.counterPath
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.COUNTER_PATH
 
 
 @Narrative("Testing the Get part of the counter service")
@@ -23,7 +22,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
                     .expect()
                         .statusCode(201)
                     .when()
-                         .post(baseUrl + counterPath)
+                         .post(baseUrl + COUNTER_PATH)
                     .andReturn()
                         .as(UUID.class)
 
@@ -47,7 +46,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
             def id = randomUUID()
 
         when: "The Service is queried for this UUID"
-            def response = RestAssured.get(baseUrl + counterPath + "/" + id)
+            def response = RestAssured.get(baseUrl + COUNTER_PATH + "/" + id)
 
         then: "The Patch request has status code 404"
             assertThat(response.statusCode, is(equalTo(404)))
