@@ -1,10 +1,12 @@
 package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
+import io.datanerds.rappelkiste.specification.util.Constants
 
 import static org.awaitility.Awaitility.await
 
 trait AwaitCounter {
+
 
     def await = {baseUrl, id ->
         def response
@@ -13,7 +15,7 @@ trait AwaitCounter {
                     .expect()
                     .statusCode(200)
                     .when()
-                    .get(baseUrl + counterPath + "/" + id)
+                    .get(baseUrl + Constants.Service.COUNTER_PATH + "/" + id)
                     .andReturn()
         })
         response

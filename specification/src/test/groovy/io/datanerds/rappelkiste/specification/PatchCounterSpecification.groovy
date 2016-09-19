@@ -1,8 +1,8 @@
 package io.datanerds.rappelkiste.specification
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.jayway.restassured.RestAssured
 import com.jayway.restassured.response.Response
+import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
@@ -10,6 +10,7 @@ import static org.awaitility.Awaitility.await
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.COUNTER_PATH
 
 
 @Narrative("Testing the Patch part of the Counter Service")
@@ -25,7 +26,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -38,20 +39,20 @@ class PatchCounterSpecification extends BaseSpecification {
         when: "A counter is being Patched"
         def response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
-                .body(patchTo)
-                    .patch(baseUrl + counterPath + "/" +uuid)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo)
+                .patch(baseUrl + COUNTER_PATH + "/" +uuid)
 
         then: "The Patch request has status code 204"
         assertThat(response.statusCode, is(204))
 
         and: "The counter has been updated by one"
         await().ignoreExceptions().until({
-            RestAssured.given().when().get(baseUrl + counterPath + "/" +uuid).then().assertThat().body(equalTo("1"))
+            RestAssured.given().when().get(baseUrl + COUNTER_PATH + "/" +uuid).then().assertThat().body(equalTo("1"))
         })
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
 
     }
 
@@ -64,7 +65,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -75,12 +76,12 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
-                .body(patchTo)
-                    .patch(patchUri)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo)
+                .patch(patchUri)
 
         then: "The Patch request has status code 204"
         assertThat(response.statusCode, is(204))
@@ -91,7 +92,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
 
     }
 
@@ -102,7 +103,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -119,17 +120,17 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response1 = RestAssured
                 .given()
-                .contentType(acceptJsonHeader)
-                .body(patchTo1)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo1)
                 .patch(patchUri)
 
         def Response response2 = RestAssured
                 .given()
-                .contentType(acceptJsonHeader)
-                .body(patchTo2)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo2)
                 .patch(patchUri)
 
         then: "The first Patch request has status code 204"
@@ -144,7 +145,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
 
     }
 
@@ -156,7 +157,7 @@ class PatchCounterSpecification extends BaseSpecification {
                 .expect()
                     .statusCode(201)
                 .when()
-                    .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
                     .as(UUID.class)
 
@@ -165,18 +166,18 @@ class PatchCounterSpecification extends BaseSpecification {
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                    .contentType(acceptJsonHeader)
-                .body(patchTo)
-                    .patch(patchUri)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo)
+                .patch(patchUri)
 
         then: "The Patch request has status code 400"
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
 
     }
 
@@ -186,29 +187,63 @@ class PatchCounterSpecification extends BaseSpecification {
         given: "A preexisting counter, with a uuid and a PatchOperation Object"
         def uuid = RestAssured
                 .expect()
-                .statusCode(201)
+                    .statusCode(201)
                 .when()
-                .post(baseUrl + counterPath)
+                    .post(baseUrl + COUNTER_PATH)
                 .andReturn()
-                .as(UUID.class)
+                    .as(UUID.class)
 
         def patchTo = [
                 "value"   : "1"
         ]
 
         when: "A counter is being Patched"
-        URI patchUri = new URI(baseUrl + counterPath + "/" + uuid)
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
         def Response response = RestAssured
                 .given()
-                .contentType(acceptJsonHeader)
-                .body(patchTo)
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo)
                 .patch(patchUri)
 
         then: "The Patch request has status code 400"
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << servers
+        baseUrl << configuration.servers
+
+    }
+
+    def "Trying to patch an existing Counter with an invalid value"(String baseUrl) {
+
+        given: "A preexisting counter, with a uuid and a PatchOperation Object"
+
+        def uuid = RestAssured
+                .expect()
+                    .statusCode(201)
+                .when()
+                    .post(baseUrl + COUNTER_PATH)
+                .andReturn()
+                    .as(UUID.class)
+
+        def patchTo = [
+                "op"   : "add",
+                "path" : "path",
+                "value": "this is not a number"
+        ]
+
+        when: "A counter is being Patched"
+        URI patchUri = new URI(baseUrl + COUNTER_PATH + "/" + uuid)
+        def Response response = RestAssured
+                .given()
+                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                    .body(patchTo)
+                .patch(patchUri)
+
+        then: "The Patch request has status code 204"
+        assertThat(response.statusCode, is(400))
+
+        where:
+        baseUrl << configuration.servers
 
     }
 }
