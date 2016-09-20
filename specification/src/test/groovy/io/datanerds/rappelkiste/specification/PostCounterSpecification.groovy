@@ -2,7 +2,6 @@ package io.datanerds.rappelkiste.specification
 
 import com.jayway.restassured.RestAssured
 import io.datanerds.rappelkiste.specification.util.Constants
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Narrative
 import spock.lang.Title
@@ -14,7 +13,7 @@ import static org.hamcrest.Matchers.*
 @Title("Post Counter Testsuite")
 class PostCounterSpecification extends BaseSpecification implements AwaitCounter {
 
-    static final Logger logger = LoggerFactory.getLogger(PostCounterSpecification.class);
+    def static final logger = LoggerFactory.getLogger(PostCounterSpecification.class);
 
     def "Posting a new Counter to the Service"(String baseUrl) {
 
@@ -39,7 +38,7 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
         assertThat(counter, is(equalTo(0)))
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 }

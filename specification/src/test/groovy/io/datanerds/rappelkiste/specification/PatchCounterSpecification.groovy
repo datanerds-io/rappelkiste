@@ -52,7 +52,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 
@@ -92,7 +92,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 
@@ -145,7 +145,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 
@@ -177,7 +177,7 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 
@@ -209,7 +209,7 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 
@@ -243,7 +243,7 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << configuration.servers
+        baseUrl << CONFIGURATION.servers
 
     }
 }

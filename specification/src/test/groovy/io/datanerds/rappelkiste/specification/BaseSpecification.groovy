@@ -1,40 +1,41 @@
 package io.datanerds.rappelkiste.specification
 
-import com.jayway.restassured.RestAssured
 import io.datanerds.rappelkiste.specification.util.Configuration
+import io.datanerds.rappelkiste.specification.util.PingCheck
 import org.awaitility.Awaitility
-import org.junit.BeforeClass
+import org.junit.ClassRule
+import org.junit.Rule
+import org.junit.rules.TestRule
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
 import spock.lang.Specification
 
 import java.util.concurrent.TimeUnit
 
-import static org.awaitility.Awaitility.await
-import static org.hamcrest.Matchers.containsString
+abstract class BaseSpecification extends Specification {
 
-class BaseSpecification extends Specification {
-
-    def static logger = LoggerFactory.getLogger(BaseSpecification.class)
+    def static final logger = LoggerFactory.getLogger(BaseSpecification.class)
 
     @Shared
-    def static configuration = new Configuration()
+    def static final CONFIGURATION = new Configuration()
 
-    static {
-        Awaitility.setDefaultTimeout(5, TimeUnit.SECONDS)
-        Awaitility.setDefaultPollInterval(1, TimeUnit.SECONDS)
-        Awaitility.setDefaultPollDelay(500, TimeUnit.MILLISECONDS)
-    }
+    @Shared
+    @ClassRule
+    def PingCheck PING_CHECK = new PingCheck(CONFIGURATION)
 
-    @BeforeClass
-    public void 'block until Ping works'() {
-        for(def baseurl : configuration.servers) {
-            URI uri = new URI(baseurl + "/ping")
-            logger.info("Testing url: " + uri.toString())
-            await().ignoreExceptions().until({
-                RestAssured.get(uri).then().assertThat().statusCode(200).and().body(containsString("pong"))
-            })
+    @Rule
+    public TestRule watcher = new TestWatcher() {
+        @Override
+        protected void starting(Description description) {
+            logger.debug(" +++ Starting Test: {} +++", description.getMethodName())
         }
     }
 
+    static {
+        Awaitility.setDefaultTimeout(10, TimeUnit.SECONDS)
+        Awaitility.setDefaultPollInterval(1, TimeUnit.SECONDS)
+        Awaitility.setDefaultPollDelay(500, TimeUnit.MILLISECONDS)
+    }
 }
