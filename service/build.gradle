@@ -1,5 +1,4 @@
 apply plugin: 'application'
-apply plugin: 'java'
 
 dependencies {
     compile project(':api')
@@ -11,4 +10,22 @@ dependencies {
     compile 'com.squareup:tape:1.2.3'
 }
 
-mainClassName = 'io.datanerds.rappelkiste.service.Rappelkiste'
+task startRappelkiste(type: JavaExec, dependsOn: classes) {
+    description = 'This task will start a Rappelkiste on port 8080'
+    main = 'io.datanerds.rappelkiste.service.Rappelkiste'
+    classpath = sourceSets.main.runtimeClasspath
+
+}
+
+task startRappelCluster(type: JavaExec, dependsOn: classes) {
+    description = 'This task will start a RappelkisteCluster on the ports provided '
+    main = 'io.datanerds.rappelkiste.service.RappelCluster'
+    classpath = sourceSets.main.runtimeClasspath
+    if (!System.properties.ports){
+        args "8080"
+    } else {
+        args System.getProperty("ports").split()
+    }
+
+
+}
