@@ -18,7 +18,7 @@ task startRappelkiste(type: JavaExec, dependsOn: classes) {
 }
 
 task startRappelCluster(type: JavaExec, dependsOn: classes) {
-    description = 'This task will start a RappelkisteCluster on the ports provided '
+    description = 'This task will start a RappelkisteCluster on the ports provided. If no ports are given it will start on port 8080 only'
     main = 'io.datanerds.rappelkiste.service.RappelCluster'
     classpath = sourceSets.main.runtimeClasspath
     if (!System.properties.ports){
