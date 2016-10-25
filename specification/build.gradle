@@ -3,19 +3,22 @@ apply plugin: "groovy"
 version = "0.0.1"
 description = "Spock Specification for the Rappelkiste"
 
-dependencies {
-    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
-    testCompile "org.awaitility:awaitility:2.0.0"
-    testCompile "com.jayway.restassured:rest-assured:2.8.0"
-    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
-    testCompile "org.hamcrest:hamcrest-core:1.3"
 
-    testCompile( 'com.athaydes:spock-reports:1.2.12' ) {
+ext {
+    groovyVersion = "2.4"
+}
+
+dependencies {
+    testCompile([
+            "org.codehaus.groovy:groovy-all:$groovyVersion.+",
+            "org.spockframework:spock-core:1.0-groovy-$groovyVersion",
+            "org.awaitility:awaitility:2.0.0",
+            "com.jayway.restassured:rest-assured:2.8.0"
+    ])
+
+    testCompile('com.athaydes:spock-reports:1.2.+') {
         transitive = false // this avoids affecting your version of Groovy/Spock
     }
-    // if you don't already have slf4j-api and an implementation of it in the classpath, add this!
-    testCompile 'org.slf4j:slf4j-api:1.7.13'
-    testCompile 'org.slf4j:slf4j-simple:1.7.13'
 }
 
 test {
