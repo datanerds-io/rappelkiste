@@ -1,31 +1,34 @@
 apply plugin: 'application'
 
-dependencies {
-    compile project(':api')
-    compile 'org.eclipse.jetty:jetty-server:9.3.5.v20151012'
-    compile 'org.eclipse.jetty:jetty-servlet:9.3.5.v20151012'
-    compile 'org.glassfish.jersey.containers:jersey-container-servlet-core:2.22.2'
+ext {
+    jettyVersion = "9.3.13.v20161014"
+}
 
-    compile("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.7.2")
-    compile 'com.squareup:tape:1.2.3'
+dependencies {
+    compile([
+            project(':api'),
+            "org.eclipse.jetty:jetty-server:$jettyVersion",
+            "org.eclipse.jetty:jetty-servlet:$jettyVersion",
+            "org.glassfish.jersey.containers:jersey-container-servlet-core:2.22.2",
+            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonVersion",
+            "com.squareup:tape:1.2.3"
+    ])
 }
 
 task startRappelkiste(type: JavaExec, dependsOn: classes) {
     description = 'This task will start a Rappelkiste on port 8080'
     main = 'io.datanerds.rappelkiste.service.Rappelkiste'
     classpath = sourceSets.main.runtimeClasspath
-
 }
 
 task startRappelCluster(type: JavaExec, dependsOn: classes) {
     description = 'This task will start a RappelkisteCluster on the ports provided. If no ports are given it will start on port 8080 only'
     main = 'io.datanerds.rappelkiste.service.RappelCluster'
     classpath = sourceSets.main.runtimeClasspath
-    if (!System.properties.ports){
+
+    if (!System.properties.ports) {
         args "8080"
     } else {
         args System.getProperty("ports").split()
     }
-
-
 }
