@@ -11,33 +11,28 @@ import static org.hamcrest.Matchers.is
 /**
  * This class verifies that all nodes are accessible.
  */
-public class PingCheck extends ExternalResource {
+class PingCheck extends ExternalResource {
 
     def static final logger = LoggerFactory.getLogger(PingCheck.class)
     def final Configuration configuration
 
     public PingCheck(Configuration configuration) {
-        this.configuration = configuration
+        this.configuration = configuration;
     }
 
     @Override
     protected void before() throws Throwable {
-        logger.info("Started version check for all nodes")
-
-        for(def baseurl : configuration.servers) {
-            URI uri = new URI(baseurl + "/ping")
-            logger.info("Testing url: " + uri.toString())
+        for (URI baseUrl : configuration.servers) {
             await().until({
-                RestAssured
-                        .when().get(uri)
+                RestAssured.when().get(baseUrl.resolve("/ping"))
                         .then().assertThat()
-                            .statusCode(200).and().body(is(equalTo("pong")))
+                        .statusCode(200).and().body(is(equalTo("pong")))
             })
         }
+
+        logger.info("Nodes {} are available", configuration.servers)
     }
 
     @Override
-    protected void after() {
-        // nothing to do right now
-    }
+    protected void after() { /** nothing to do right now */ }
 }

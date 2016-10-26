@@ -6,6 +6,7 @@ import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
+import static io.datanerds.rappelkiste.specification.util.Constants.Service.ACCEPT_JSON_HEADER
 import static org.awaitility.Awaitility.await
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
@@ -20,39 +21,40 @@ class PatchCounterSpecification extends BaseSpecification {
 
     def "Patching an existing Counter by adding 1"(String baseUrl) {
 
-        given: "A preexisting counter, with a uuid and a PatchOperation Object"
-
-        def uuid = RestAssured
-                .expect()
+        given: "A counter has been create and its UUID is known"
+            def uuid = RestAssured
+                    .expect()
                     .statusCode(201)
-                .when()
+                    .when()
                     .post(baseUrl + COUNTER_PATH)
-                .andReturn()
+                    .andReturn()
                     .as(UUID.class)
 
-        def patchTo = [
-                               "op"   : "add",
-                               "path" : "path",
-                               "value": "1"
-                       ]
+        and: "A Patch object exists"
+            def patchTo = [
+                    "op"   : "add",
+                    "path" : "path",
+                    "value": "42"
+            ]
 
-        when: "A counter is being Patched"
-        def response = RestAssured
-                .given()
-                    .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+        when: "The counter is being patched"
+            def response = RestAssured
+                    .given()
+                    .contentType(ACCEPT_JSON_HEADER)
                     .body(patchTo)
-                .patch(baseUrl + COUNTER_PATH + "/" +uuid)
+                    .patch(baseUrl + COUNTER_PATH + "/" + uuid)
 
         then: "The Patch request has status code 204"
-        assertThat(response.statusCode, is(204))
+            assertThat(response.statusCode, is(204))
 
-        and: "The counter has been updated by one"
-        await().ignoreExceptions().until({
-            RestAssured.given().when().get(baseUrl + COUNTER_PATH + "/" +uuid).then().assertThat().body(equalTo("1"))
-        })
+        and: "The counter has been updated by 42"
+            await().ignoreExceptions().until({
+                RestAssured.when().get(baseUrl + COUNTER_PATH + "/" + uuid)
+                        .then().assertThat().body(equalTo("42"))
+            })
 
         where:
-        baseUrl << CONFIGURATION.servers
+            baseUrl << CONFIGURATION.servers
 
     }
 
