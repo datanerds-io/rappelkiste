@@ -28,3 +28,5 @@ test {
 task functionalTest(type: Test) {
     include '**/*Specification.groovy'
 }
+
+check.dependsOn.remove(test)

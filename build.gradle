@@ -29,3 +29,15 @@ subprojects {
         testCompile("org.mockito:mockito-all:1.10.19")
     }
 }
+
+task startService() {
+    evaluationDependsOn ":service"
+    dependsOn project(':service').startAsync
+}
+
+task startTests() {
+    evaluationDependsOn ':specification'
+    dependsOn project(':specification').test
+}
+
+task specification(dependsOn: [subprojects.build, startService, startTests]) {}

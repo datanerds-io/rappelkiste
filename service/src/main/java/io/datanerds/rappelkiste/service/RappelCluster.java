@@ -25,6 +25,7 @@ public class RappelCluster {
             }
         }
         startUp(ports);
+        Runtime.getRuntime().addShutdownHook(new Thread(CounterModule::shutdown));
     }
 
     private static void startUp(List<Integer> ports) throws Exception {
@@ -32,7 +33,6 @@ public class RappelCluster {
             Server rappelkiste = new Rappelkiste(port);
             servers.add(rappelkiste);
             rappelkiste.start();
-            Runtime.getRuntime().addShutdownHook(new Thread(CounterModule::shutdown));
         }
         logger.info("Started #{} server", servers.size());
     }
