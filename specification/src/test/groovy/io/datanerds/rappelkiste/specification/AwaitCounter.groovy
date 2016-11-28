@@ -7,15 +7,14 @@ import static org.awaitility.Awaitility.await
 
 trait AwaitCounter {
 
-
     def await = {baseUrl, id ->
         def response
         await().until({
             response = RestAssured
                     .expect()
-                    .statusCode(200)
+                        .statusCode(200)
                     .when()
-                    .get(baseUrl + Constants.Service.COUNTER_PATH + "/" + id)
+                        .get(baseUrl + Constants.Service.COUNTER_PATH + "/" + id)
                     .andReturn()
         })
         response

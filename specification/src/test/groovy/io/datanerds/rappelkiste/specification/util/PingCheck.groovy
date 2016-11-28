@@ -14,23 +14,24 @@ import static org.hamcrest.Matchers.is
 class PingCheck extends ExternalResource {
 
     def static final logger = LoggerFactory.getLogger(PingCheck.class)
-    def final Configuration configuration
+    final URI[] hosts
 
-    public PingCheck(Configuration configuration) {
-        this.configuration = configuration;
+    public PingCheck(URI[] hosts) {
+        this.hosts = hosts
     }
 
     @Override
     protected void before() throws Throwable {
-        for (URI baseUrl : configuration.servers) {
+        for(URI baseUrl : hosts) {
             await().until({
-                RestAssured.when().get(baseUrl.resolve("/ping"))
+                RestAssured
+                        .when().get(baseUrl.resolve("/ping"))
                         .then().assertThat()
-                        .statusCode(200).and().body(is(equalTo("pong")))
+                            .statusCode(200)
+                            .and().body(is(equalTo("pong")))
             })
         }
-
-        logger.info("Nodes {} are available", configuration.servers)
+        logger.info("Nodes {} are available", hosts)
     }
 
     @Override

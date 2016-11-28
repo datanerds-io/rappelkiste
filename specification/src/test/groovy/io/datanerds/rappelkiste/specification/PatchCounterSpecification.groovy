@@ -6,7 +6,6 @@ import io.datanerds.rappelkiste.specification.util.Constants
 import spock.lang.Narrative
 import spock.lang.Title
 
-import static io.datanerds.rappelkiste.specification.util.Constants.Service.ACCEPT_JSON_HEADER
 import static org.awaitility.Awaitility.await
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
@@ -14,50 +13,48 @@ import static org.hamcrest.Matchers.is
 import static io.datanerds.rappelkiste.specification.util.Constants.Service.COUNTER_PATH
 
 
-@Narrative("Testing the Patch part of the Counter Service")
-@Title("Patch Counter Testsuite")
+@Narrative("Testing the PATCH part of the counter service")
+@Title("Patch Counter Test Suite")
 class PatchCounterSpecification extends BaseSpecification {
 
+    def "Patching an existing counter by adding 42"(String baseUrl) {
 
-    def "Patching an existing Counter by adding 1"(String baseUrl) {
-
-        given: "A counter has been create and its UUID is known"
+        given: "A counter has been created an its UUID is known"
             def uuid = RestAssured
                     .expect()
-                    .statusCode(201)
+                        .statusCode(201)
                     .when()
-                    .post(baseUrl + COUNTER_PATH)
+                        .post(baseUrl + COUNTER_PATH)
                     .andReturn()
-                    .as(UUID.class)
+                        .as(UUID.class)
 
-        and: "A Patch object exists"
-            def patchTo = [
-                    "op"   : "add",
-                    "path" : "path",
-                    "value": "42"
-            ]
+        and: "A patch operation for adding 42 exists"
+            def patch = ["op"   : "add",
+                         "path" : "path",
+                         "value": "42"]
 
-        when: "The counter is being patched"
+        when: "A counter is being patched"
             def response = RestAssured
                     .given()
-                    .contentType(ACCEPT_JSON_HEADER)
-                    .body(patchTo)
-                    .patch(baseUrl + COUNTER_PATH + "/" + uuid)
+                        .contentType(Constants.Service.ACCEPT_JSON_HEADER)
+                        .body(patch)
+                    .patch(baseUrl + COUNTER_PATH + "/" +uuid)
 
-        then: "The Patch request has status code 204"
+        then: "Patch request has status code 204"
             assertThat(response.statusCode, is(204))
 
         and: "The counter has been updated by 42"
             await().ignoreExceptions().until({
-                RestAssured.when().get(baseUrl + COUNTER_PATH + "/" + uuid)
-                        .then().assertThat().body(equalTo("42"))
+                RestAssured
+                        .when()
+                            .get(baseUrl + COUNTER_PATH + "/" + uuid)
+                        .then()
+                            .assertThat().body(equalTo("42"))
             })
 
         where:
-            baseUrl << CONFIGURATION.servers
-
+            baseUrl << HOSTS
     }
-
 
     def "Patching an existing Counter by adding -1"(String baseUrl) {
 
@@ -94,8 +91,7 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << CONFIGURATION.servers
-
+        baseUrl << HOSTS
     }
 
     def "Patching an existing Counter by adding -1 and 1"(String baseUrl) {
@@ -147,10 +143,8 @@ class PatchCounterSpecification extends BaseSpecification {
         })
 
         where:
-        baseUrl << CONFIGURATION.servers
-
+        baseUrl << HOSTS
     }
-
 
     def "Trying to patch a counter with an invalid PatchTo missing a value"(String baseUrl) {
 
@@ -179,10 +173,8 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << CONFIGURATION.servers
-
+        baseUrl << HOSTS
     }
-
 
     def "Trying to patch a counter with an invalid PatchTo missing the operation"(String baseUrl) {
 
@@ -211,8 +203,7 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << CONFIGURATION.servers
-
+        baseUrl << HOSTS
     }
 
     def "Trying to patch an existing Counter with an invalid value"(String baseUrl) {
@@ -245,7 +236,6 @@ class PatchCounterSpecification extends BaseSpecification {
         assertThat(response.statusCode, is(400))
 
         where:
-        baseUrl << CONFIGURATION.servers
-
+        baseUrl << HOSTS
     }
 }
