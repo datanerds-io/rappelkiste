@@ -36,8 +36,7 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
             assertThat(response.body.asString(), is(equalTo("0")))
 
         where:
-            baseUrl << CONFIGURATION.servers
-
+            baseUrl << HOSTS
     }
 
     def "Retrieving an non-existing counter"(String baseUrl) {
@@ -52,7 +51,6 @@ class GetCounterSpecification extends BaseSpecification implements AwaitCounter 
             assertThat(response.statusCode, is(equalTo(404)))
 
         where:
-            baseUrl << CONFIGURATION.servers
-
+            baseUrl << HOSTS
     }
 }

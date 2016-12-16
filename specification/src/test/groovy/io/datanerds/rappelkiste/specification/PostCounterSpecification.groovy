@@ -38,7 +38,7 @@ class PostCounterSpecification extends BaseSpecification implements AwaitCounter
         assertThat(counter, is(equalTo(0)))
 
         where:
-        baseUrl << CONFIGURATION.servers
+        baseUrl << HOSTS
 
     }
 }

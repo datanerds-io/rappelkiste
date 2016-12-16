@@ -1,6 +1,6 @@
 package io.datanerds.rappelkiste.specification
 
-import io.datanerds.rappelkiste.specification.util.Configuration
+
 import io.datanerds.rappelkiste.specification.util.PingCheck
 import org.awaitility.Awaitility
 import org.junit.ClassRule
@@ -14,16 +14,20 @@ import spock.lang.Specification
 
 import java.util.concurrent.TimeUnit
 
+import static io.datanerds.rappelkiste.specification.util.Constants.CommandLine.BASE_URL_PROPERTY
+
 abstract class BaseSpecification extends Specification {
 
-    def static final logger = LoggerFactory.getLogger(BaseSpecification.class)
+    static final logger = LoggerFactory.getLogger(BaseSpecification.class)
 
     @Shared
-    def static final CONFIGURATION = new Configuration()
+    static final URI[] HOSTS = System.getProperty(BASE_URL_PROPERTY, "http://localhost:8080")
+            .split(',')
+            .collect{value -> new URI(value)}
 
     @Shared
     @ClassRule
-    def PingCheck PING_CHECK = new PingCheck(CONFIGURATION)
+    def PingCheck PING_CHECK = new PingCheck(HOSTS)
 
     @Rule
     public TestRule watcher = new TestWatcher() {
